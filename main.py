@@ -1,6 +1,5 @@
 from tkinter import messagebox
 import tkinter as tk
-import re
 
 
 def levenshtein_distance(_first, _last):
@@ -35,20 +34,30 @@ def calculate_distance():
         distance = levenshtein_distance(first_word, last_word)
         messagebox.showinfo("Result", f"The Levenshtein distance is: {distance}")
     except Exception as e:
-        messagebox.showerror("Error", f"An error occurred: {str(e)}")
+        messagebox.showerror("Error", f"An error occurred: {e}")
+
+
+def check():
+    _entry_first = entry_first.get()
+    _entry_last = entry_last.get()
+
+    if _entry_first.isalpha() is False or _entry_last.isalpha() is False:
+        messagebox.showerror('Only letters', 'Only letters are allowed!')
+    else:
+        calculate_distance()
 
 
 if __name__ == '__main__':
-
     root = tk.Tk()
     root.title("Levenshtein Distance Calculator")
+    root.resizable(False, False)
 
     label_first = tk.Label(root, text="Enter the first word:")
     entry_first = tk.Entry(root)
     label_last = tk.Label(root, text="Enter the second word:")
     entry_last = tk.Entry(root)
 
-    calculate_button = tk.Button(root, text="Calculate", command=calculate_distance)
+    calculate_button = tk.Button(root, text="Calculate", command=check)
 
     label_first.grid(row=0, column=0, padx=10, pady=5)
     entry_first.grid(row=0, column=1, padx=10, pady=5)
