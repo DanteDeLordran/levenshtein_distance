@@ -26,23 +26,23 @@ def levenshtein_distance(_first, _last):
     return matrix[first_len - 1][last_len - 1]
 
 
+def binary_to_text(binary_string):
+    return ''.join(chr(int(binary_string[i * 8:i * 8 + 8], 2)) for i in range(len(binary_string) // 8))
+
+
 def calculate_distance():
-    first_word = entry_first.get()
-    last_word = entry_last.get()
-
-    try:
-        distance = levenshtein_distance(first_word, last_word)
-        messagebox.showinfo("Result", f"The Levenshtein distance is: {distance}")
-    except Exception as e:
-        messagebox.showerror("Error", f"An error occurred: {e}")
+    first_word = binary_to_text(entry_first.get())
+    last_word = binary_to_text(entry_last.get())
+    distance = levenshtein_distance(first_word, last_word)
+    messagebox.showinfo("Result", f"The Levenshtein distance is: {distance}")
 
 
-def check():
+def check_binary():
     _entry_first = entry_first.get()
     _entry_last = entry_last.get()
 
-    if _entry_first.isalpha() is False or _entry_last.isalpha() is False:
-        messagebox.showerror('Only letters', 'Only letters are allowed!')
+    if not all(c in '01' for c in _entry_first) or not all(c in '01' for c in _entry_last):
+        messagebox.showerror('Invalid input', 'Please enter valid binary words (containing only 0s and 1s).')
     else:
         calculate_distance()
 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     label_last = tk.Label(root, text="Enter the second word:")
     entry_last = tk.Entry(root)
 
-    calculate_button = tk.Button(root, text="Calculate", command=check)
+    calculate_button = tk.Button(root, text="Calculate", command=check_binary)
 
     label_first.grid(row=0, column=0, padx=10, pady=5)
     entry_first.grid(row=0, column=1, padx=10, pady=5)

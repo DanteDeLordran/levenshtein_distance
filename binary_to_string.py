@@ -45,5 +45,12 @@ for i in range(0, len(bin_data), 7):
     str_data = str_data + chr(decimal_data)
 
 # printing the result
-print("The Binary value after string conversion is:",
-      str_data)
+print("The Binary value after string conversion is:", str_data)
+
+
+def binary_to_text(binary_string):
+    # Convierte cada bloque de 8 caracteres (un byte) en un entero y luego en un carácter
+    return ''.join(chr(int(binary_string[i * 8:i * 8 + 8], 2)) for i in range(len(binary_string) // 8))
+
+
+print(f'Binary to string {binary_to_text('0100011101100101011001010110101101110011')}')
