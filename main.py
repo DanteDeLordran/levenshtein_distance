@@ -42,8 +42,8 @@ def check_binary():
     _entry_first = entry_first.get()
     _entry_last = entry_last.get()
 
-    if not all(c in '01' for c in _entry_first) or not all(c in '01' for c in _entry_last):
-        messagebox.showerror('Invalid input', 'Please enter valid binary words (containing only 0s and 1s).')
+    if not all(c in '01' for c in _entry_first) or not all(c in '01' for c in _entry_last) or not len(_entry_first) % 8 == 0 or not len(_entry_last) % 8 == 0:
+        messagebox.showerror('Invalid input', 'Please enter valid binary words')
     else:
         first_word = binary_to_text(_entry_first)
         last_word = binary_to_text(_entry_last)
