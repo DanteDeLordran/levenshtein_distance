@@ -2,7 +2,7 @@ from tkinter import messagebox
 import tkinter as tk
 
 
-def levenshtein_distance(_first, _last):
+def levenshtein_distance(_first: str, _last: str):
     first_len = len(_first) + 1
     last_len = len(_last) + 1
 
@@ -26,15 +26,16 @@ def levenshtein_distance(_first, _last):
     return matrix[first_len - 1][last_len - 1]
 
 
-def binary_to_text(binary_string):
+def binary_to_text(binary_string: str) -> str:
+    binary_string.replace(" ", "")
     return ''.join(chr(int(binary_string[i * 8:i * 8 + 8], 2)) for i in range(len(binary_string) // 8))
 
 
-def calculate_distance():
-    first_word = binary_to_text(entry_first.get())
-    last_word = binary_to_text(entry_last.get())
-    distance = levenshtein_distance(first_word, last_word)
-    messagebox.showinfo("Result", f"The Levenshtein distance is: {distance}")
+def calculate_distance(first_word, last_word):
+    if first_word.isalpha() and last_word.isalpha():
+        messagebox.showinfo("Result", f"The Levenshtein distance is: {levenshtein_distance(first_word, last_word)}")
+    else:
+        messagebox.showerror('Only letters', 'Binary must be a text!')
 
 
 def check_binary():
@@ -44,7 +45,10 @@ def check_binary():
     if not all(c in '01' for c in _entry_first) or not all(c in '01' for c in _entry_last):
         messagebox.showerror('Invalid input', 'Please enter valid binary words (containing only 0s and 1s).')
     else:
-        calculate_distance()
+        first_word = binary_to_text(_entry_first)
+        last_word = binary_to_text(_entry_last)
+        if first_word and last_word:
+            calculate_distance(first_word, last_word)
 
 
 if __name__ == '__main__':
